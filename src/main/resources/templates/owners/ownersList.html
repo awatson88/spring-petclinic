@@ -37,23 +37,23 @@
     </span>
     <span>]&nbsp;</span>
     <span>
-      <a th:if="${currentPage > 1}" th:href="@{'/owners?page=1'}" th:title="#{first}" class="fa fa-fast-backward"></a>
-      <span th:unless="${currentPage > 1}" th:title="#{first}" class="fa fa-fast-backward"></span>
+      <a th:if="${currentPage > 1}" th:href="@{'/owners?page=1'}" th:title="#{first}" class="fa-solid fa-backward-fast"></a>
+      <span th:unless="${currentPage > 1}" th:title="#{first}" class="fa-solid fa-backward-fast"></span>
     </span>
     <span>
       <a th:if="${currentPage > 1}" th:href="@{'/owners?page=__${currentPage - 1}__'}" th:title="#{previous}"
-        class="fa fa-step-backward"></a>
-      <span th:unless="${currentPage > 1}" th:title="#{previous}" class="fa fa-step-backward"></span>
+        class="fa-solid fa-backward-step"></a>
+      <span th:unless="${currentPage > 1}" th:title="#{previous}" class="fa-solid fa-backward-step"></span>
     </span>
     <span>
       <a th:if="${currentPage < totalPages}" th:href="@{'/owners?page=__${currentPage + 1}__'}" th:title="#{next}"
-        class="fa fa-step-forward"></a>
-      <span th:unless="${currentPage < totalPages}" th:title="#{next}" class="fa fa-step-forward"></span>
+        class="fa-solid fa-forward-step"></a>
+      <span th:unless="${currentPage < totalPages}" th:title="#{next}" class="fa-solid fa-forward-step"></span>
     </span>
     <span>
       <a th:if="${currentPage < totalPages}" th:href="@{'/owners?page=__${totalPages}__'}" th:title="#{last}"
-        class="fa fa-fast-forward"></a>
-      <span th:unless="${currentPage < totalPages}" th:title="#{last}" class="fa fa-fast-forward"></span>
+        class="fa-solid fa-forward-fast"></a>
+      <span th:unless="${currentPage < totalPages}" th:title="#{last}" class="fa-solid fa-forward-fast"></span>
     </span>
   </div>
 </body>

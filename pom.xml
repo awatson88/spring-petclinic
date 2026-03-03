@@ -13,7 +13,7 @@
 
   <properties>
     <!-- Generic properties -->
-    <java.version>17</java.version>
+    <java.version>21</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <!-- Important for reproducible builds. Update using e.g. ./mvnw versions:set -DnewVersion=... -->
@@ -22,11 +22,11 @@
     <!-- Web dependencies -->
     <webjars-locator.version>1.1.2</webjars-locator.version>
     <webjars-bootstrap.version>5.3.8</webjars-bootstrap.version>
-    <webjars-font-awesome.version>4.7.0</webjars-font-awesome.version>
+    <webjars-font-awesome.version>6.7.2</webjars-font-awesome.version>
 
     <checkstyle.version>12.1.2</checkstyle.version>
     <jacoco.version>0.8.14</jacoco.version>
-    <libsass.version>0.3.4</libsass.version>
+    <frontend-maven-plugin.version>1.15.1</frontend-maven-plugin.version>
     <lifecycle-mapping>1.0.0</lifecycle-mapping>
     <maven-checkstyle.version>3.6.0</maven-checkstyle.version>
     <nohttp-checkstyle.version>0.0.11</nohttp-checkstyle.version>
@@ -109,7 +109,7 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>org.webjars.npm</groupId>
+      <groupId>org.webjars</groupId>
       <artifactId>font-awesome</artifactId>
       <version>${webjars-font-awesome.version}</version>
       <scope>runtime</scope>
@@ -320,21 +320,40 @@
             </executions>
           </plugin>
           <plugin>
-            <groupId>com.gitlab.haynes</groupId>
-            <artifactId>libsass-maven-plugin</artifactId>
-            <version>${libsass.version}</version>
+            <groupId>com.github.eirslett</groupId>
+            <artifactId>frontend-maven-plugin</artifactId>
+            <version>${frontend-maven-plugin.version}</version>
             <configuration>
-              <inputPath>${basedir}/src/main/scss/</inputPath>
-              <outputPath>${basedir}/src/main/resources/static/resources/css/</outputPath>
-              <includePath>${project.build.directory}/webjars/META-INF/resources/webjars/bootstrap/${webjars-bootstrap.version}/scss/</includePath>
+              <nodeVersion>v20.11.1</nodeVersion>
+              <workingDirectory>${project.build.directory}/frontend</workingDirectory>
             </configuration>
             <executions>
               <execution>
-                <?m2e execute onConfiguration,onIncremental?>
+                <id>install-node-and-npm</id>
                 <goals>
-                  <goal>compile</goal>
+                  <goal>install-node-and-npm</goal>
                 </goals>
                 <phase>generate-resources</phase>
+              </execution>
+              <execution>
+                <id>install-sass</id>
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+                <phase>generate-resources</phase>
+                <configuration>
+                  <arguments>install sass</arguments>
+                </configuration>
+              </execution>
+              <execution>
+                <id>compile-sass</id>
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+                <phase>generate-resources</phase>
+                <configuration>
+                  <arguments>exec sass -- --load-path=${project.build.directory}/webjars/META-INF/resources/webjars/bootstrap/${webjars-bootstrap.version}/scss/ ${basedir}/src/main/scss/petclinic.scss ${basedir}/src/main/resources/static/resources/css/petclinic.css</arguments>
+                </configuration>
               </execution>
             </executions>
           </plugin>
