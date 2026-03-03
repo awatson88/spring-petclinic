@@ -13,9 +13,9 @@
           <select th:field="*{__${name}__}">
             <option th:each="item : ${items}" th:value="${item}" th:text="${item}">dog</option>
           </select>
-          <span th:if="${valid}" class="fa fa-ok form-control-feedback" aria-hidden="true"></span>
+          <span th:if="${valid}" class="fa-solid fa-check form-control-feedback" aria-hidden="true"></span>
           <th:block th:if="${!valid}">
-            <span class="fa fa-remove form-control-feedback" aria-hidden="true"></span>
+            <span class="fa-solid fa-xmark form-control-feedback" aria-hidden="true"></span>
             <span class="help-inline" th:errors="*{__${name}__}" th:text="#{error}">Error</span>
           </th:block>
         </div>
